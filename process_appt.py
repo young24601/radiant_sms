@@ -1,19 +1,32 @@
 import re
+import datetime
 
-time_of_day = "morning"
-when_is_appt = "today"
+d = datetime.datetime.now()
 
-with open("/Volumes/public/Young/appt/2020_07_10.txt", "r") as f:
+if 5 <= d.hour <= 11:
+    time_of_day = "morning"
+elif 11 < d.hour <= 16:
+    time_of_day = "afternoon"
+else:
+    time_of_day = "evening"
+
+when_is_appt = "tomorrow"
+
+with open("/Volumes/public/Young/appt/2020_08_01.txt", "r") as f:
     appointments_raw = f.readlines()
 
 message_list = {}
 
 for line in appointments_raw:
     l = line.strip()
-    firstname = re.search('\S+, (?P<firstname>\S+)', l)['firstname']
-    appt_time = re.search('(?P<appt_time>\d+:\d+ \w\w)', l)['appt_time']
-    phone_regex = re.search('\((\d{3})\)\s?(\d{3})-(\d{4})', l)
-    phone_number = phone_regex[1] + phone_regex[2] + phone_regex[3]
+    try:
+        firstname = re.search('\S+, (?P<firstname>\S+)', l)['firstname']
+        appt_time = re.search('(?P<appt_time>\d+:\d+ \w\w)', l)['appt_time']
+        phone_regex = re.search('\((\d{3})\)\s?(\d{3})-(\d{4})', l)
+        phone_number = phone_regex[1] + phone_regex[2] + phone_regex[3]
+    except:
+        print(l)
+        continue
 
     if phone_number in message_list:
         print(phone_number)
