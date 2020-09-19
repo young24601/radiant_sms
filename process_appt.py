@@ -10,9 +10,11 @@ elif 11 < d.hour <= 16:
 else:
     time_of_day = "evening"
 
-when_is_appt = "tomorrow"
+with open("vars", "r") as vars:
+    path = vars.readline().strip()
+    when_is_appt = vars.readline().strip()
 
-with open("/Volumes/public/Young/appt/2020_08_01.txt", "r") as f:
+with open(path, "r") as f:
     appointments_raw = f.readlines()
 
 message_list = {}
