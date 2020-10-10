@@ -1,6 +1,7 @@
 import re
 import datetime
 import os
+import glob
 
 d = datetime.datetime.now()
 
@@ -13,7 +14,13 @@ else:
 
 root = os.path.dirname(os.path.realpath(__file__)) + "/"
 with open(root + "vars", "r") as vars:
-    path = vars.readline().strip()
+    path_variable = vars.readline().strip()
+    if path_variable.split()[0] == "latest":
+        list_of_files = glob.glob(path_variable.split()[1] + "*") # * means all if need specific format then *.csv
+        latest_file = max(list_of_files, key=os.path.getctime)
+        path = latest_file
+    else:
+        path = path_variable
     when_is_appt = vars.readline().strip()
 
 with open(path, "r") as f:
