@@ -1,5 +1,6 @@
 import re
 import datetime
+import os
 
 d = datetime.datetime.now()
 
@@ -10,7 +11,8 @@ elif 11 < d.hour <= 16:
 else:
     time_of_day = "evening"
 
-with open("vars", "r") as vars:
+root = os.path.dirname(os.path.realpath(__file__)) + "/"
+with open(root + "vars", "r") as vars:
     path = vars.readline().strip()
     when_is_appt = vars.readline().strip()
 
@@ -35,7 +37,7 @@ for line in appointments_raw:
         print(f'We are also looking forward to taking care of {firstname} at {appt_time}.')
 
     else:
-        message_list[phone_number] = f'Good {time_of_day} {firstname}, this is your dental office with a reminder that you have an appointment {when_is_appt} at {appt_time}. We look forward to taking care of you! 1721 Story Road.'
+        message_list[phone_number] = f'Good {time_of_day} {firstname}, this is your dental office with a reminder that you have an appointment {when_is_appt} at {appt_time}. We look forward to taking care of you! We are located at 1721 Story Road.  Our phone number is 408-929-9977.'
         print(phone_number)
         print(message_list[phone_number])
     print("------------------------")
